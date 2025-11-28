@@ -1,0 +1,70 @@
+package ss1.ong.datacenter.common.enums;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.HttpMethod;
+import org.springframework.util.AntPathMatcher;
+
+/**
+ * Enum que centraliza las rutas públicas (endpoints) que no requieren
+ * autenticación JWT.
+ * 
+ * Cada entrada representa una combinación específica de método HTTP y path que
+ * será explícitamente permitida en la configuración de seguridad de Spring
+ * Security.
+ * 
+ * Si una misma ruta debe permitir múltiples métodos HTTP (por ejemplo, GET y
+ * POST),
+ * se debe declarar una entrada independiente por cada método.
+ * 
+ * Es importante que los valores definidos aquí coincidan exactamente con los
+ * paths utilizados en los controladores correspondientes, de lo contrario,
+ * no serán excluidos correctamente del filtro de autenticación.<br>
+ * <p>
+ * Los valores de `path` pueden contener comodines usando el estilo de patrones
+ * Ant {@link AntPathMatcher}
+ * </p>
+ * 
+ * <li>Ejemplos de uso:</li>
+ * 
+ * <pre>
+ *     // Permitir POST en login
+ *     AUTH_LOGIN(HttpMethod.POST, "/api/v1/login")
+ *
+ *     // Permitir GET y POST en /participants
+ *     PARTICIPANT_CREATE_GET(HttpMethod.GET, "/api/v1/participants")
+ *     PARTICIPANT_CREATE_POST(HttpMethod.POST, "/api/v1/participants")
+ *
+ *     // Permitir todos los métodos (dejar como null)
+ *     SWAGGER_UI(null, "/swagger-ui/**")
+ * </pre>
+ * 
+ * 
+ * @author Yennifer de Leon
+ * @version 1.1
+ * @since 2025-08-27
+ * @see AntPathMatcher
+ */
+@Getter
+@AllArgsConstructor
+public enum PublicEndpointsEnum {
+
+    AUTH_RECOVERY_PASSWORD(HttpMethod.POST, "/api/user/password-recovery"),
+    AUTH_LOGIN(HttpMethod.POST, "/api/login"),
+    AUTH_LOGIN_MFA(HttpMethod.POST, "/api/login/mfa"),
+    SEND_CODE(HttpMethod.POST, "/api/send-code"),
+    SIGN_IN(HttpMethod.POST, "/api/user/register"),
+    SIGN_IN_CLIENT(HttpMethod.POST, "/api/client/register"),
+
+    SEARCH_FOR_DELIVERY(HttpMethod.GET, "/api/delivery/find/**"),
+
+    // Rutas publicas de Activity
+    SWAGGER_UI(null, "/swagger-ui/**"),
+    API_DOCS(null, "/v3/api-docs/**"),
+
+    ;
+
+    private final HttpMethod method;
+    private final String path;
+
+}
