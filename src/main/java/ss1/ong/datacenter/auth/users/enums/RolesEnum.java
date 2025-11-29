@@ -16,11 +16,8 @@ import lombok.Getter;
 public enum RolesEnum {
 
     ADMIN("Administrador"),
-    CLIENT("Cliente"),
-    COMMERCE("Comercio"),
-    DELIVERER("Repartidor"),
-    OPERATOR("Operador")
-    ;
+    JOURNALIST("Periodista"),
+    CLIENT("Cliente");
 
     /**
      * Nombre descriptivo del rol para mostrar en interfaces de usuario.
