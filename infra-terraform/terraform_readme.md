@@ -290,6 +290,7 @@ kubectl expose deployment nginx --port=80 --target-port=80 --type=LoadBalancer
 ```bash
 #Terraform 
 terraform init
+terraform fmt
 terraform validate
 terraform plan -out tfplan
 terraform apply tfplan
@@ -300,11 +301,21 @@ aws eks --region us-east-2 update-kubeconfig --name ss1-org-eks-cluster
 
 # Kubectl básicos 
 kubectl config view
+kubectl config current-context
+kubectl config use-context <name>
 kubectl get nodes
+kubectl get pods -A
 kubectl get pods -n kube-system
 kubectl create deployment nginx --image=nginx
 kubectl expose deployment nginx --port=80 --type=LoadBalancer
 kubectl get svc -w # Ver detalles del Service / LB kubectl describe svc nginx 
+# Ver logs de un pod
+kubectl logs -f <pod-name>
+# Acceso a un pod
+kubectl exec -it <pod-name> -- /bin/sh
+# Deploy de prueba (nginx)
+kubectl apply -f nginx.yaml
+kubectl get svc -w
 # Para eliminar kubectl delete svc nginx
 kubectl delete deployment nginx
 ``` 

@@ -13,7 +13,7 @@ variable "project_prefix" {
 # ARN de un usuario IAM con permisos de administrador al que se le darán permisos de administración del cluster eks
 variable "iam_user_admin_arn" {
   type    = string
-  default = "arn:aws:iam::767828726453:user/admin-terraform"
+  default = "arn:aws:iam::XXXX:user/admin-terraform"
 }
 
 variable "az_count" {
@@ -21,3 +21,38 @@ variable "az_count" {
   default = 3
 }
 
+variable "postgres_password" {
+  type      = string
+  sensitive = true
+  default = "secure_password" # CAMBIAR!!
+}
+
+variable "db_instance_class" {
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_allocated_storage" {
+  description = "Allocated storage (GB)"
+  type        = number
+  default     = 5
+}
+
+variable "db_engine_version" {
+  description = "Postgres engine version"
+  type        = string
+  default     = "17.4"
+}
+
+variable "db_master_username" {
+  description = "Master username for DBs"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_port" {
+  description = "Port for Postgres"
+  type        = number
+  default     = 5432
+}
