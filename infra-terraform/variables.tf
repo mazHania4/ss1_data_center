@@ -10,6 +10,12 @@ variable "project_prefix" {
   default = "ss1-org"
 }
 
+# ARN de un usuario IAM con permisos de administrador al que se le darán permisos de administración del cluster eks
+variable "iam_user_admin_arn" {
+  type    = string
+  default = "arn:aws:iam::767828726453:user/admin-terraform"
+}
+
 variable "az_count" {
   type    = number
   default = 3
