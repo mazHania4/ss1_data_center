@@ -43,10 +43,10 @@ public class AppUserService {
             throw new DuplicateResourceException("El nombre de usuario ya esta en uso, elige uno diferente");
         }
 
-        String encryptedPassword = passwordEncoder.encode(createUserDTO.getPasswordHash());
+        String encryptedPassword = passwordEncoder.encode(createUserDTO.getPassword());
         AppUser user = appUserMapper.createUserDtoToAppUser(createUserDTO);
         user.setRole(RolesEnum.CLIENT);
-        user.setPasswordHash(encryptedPassword);
+        user.setPassword(encryptedPassword);
         user.setStatus(StatusUserEnum.ACTIVE);
         user.setMfaActivated(false);
         return appUserRepository.save(user);
@@ -82,7 +82,7 @@ public class AppUserService {
         MfaCodes verification = mfaCodesService.verificateCode(recoveryPasswordDTO.getCode(), recoveryPasswordDTO.getUsername());
         AppUser user = verification.getAppUser();
         String encryptedPassword = passwordEncoder.encode(recoveryPasswordDTO.getPassword());
-        user.setPasswordHash(encryptedPassword);
+        user.setPassword(encryptedPassword);
         appUserRepository.save(user);
     }
 
@@ -120,7 +120,7 @@ public class AppUserService {
         appUserMapper.updateAppUserFromDto(updateUserByAdminDTO, user);
 
         if (updateUserByAdminDTO.getPassword() != null) {
-            user.setPasswordHash(passwordEncoder.encode(updateUserByAdminDTO.getPassword()));
+            user.setPassword(passwordEncoder.encode(updateUserByAdminDTO.getPassword()));
         }
 
         return appUserMapper.appUserToUserDto(appUserRepository.save(user));
@@ -140,7 +140,7 @@ public class AppUserService {
         }
         String encryptedPassword = passwordEncoder.encode(createUserByAdminDTO.getPassword());
         AppUser user = appUserMapper.createUserByAdminDtoToAppUser(createUserByAdminDTO);
-        user.setPasswordHash(encryptedPassword);
+        user.setPassword(encryptedPassword);
         return appUserRepository.save(user);
     }
 }

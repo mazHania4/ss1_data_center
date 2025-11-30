@@ -43,7 +43,7 @@ public class AppUser extends Auditor {
     private String lastname;
 
     @Column(nullable = false, length = 255)
-    private String passwordHash;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

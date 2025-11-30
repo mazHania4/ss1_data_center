@@ -12,10 +12,9 @@ public class CreateUserDTO {
     @Size(max = 20, message = "El nombre de usuario debe tener como máximo 50 caracteres.")
     String username;
 
-    @JsonAlias("password")
     @NotBlank(message = "La contraseña no puede estar vacía")
     @Size(min = 8, max = 16, message = "La contraseña debe tener entre 8 y 16 caracteres")
-    String passwordHash;
+    String password;
 
     @NotBlank(message = "El telefono no puede estar vacio")
     @Size(min = 8, max = 16, message = "La contraseña debe tener al menos 8 caracteres")
