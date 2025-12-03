@@ -54,8 +54,8 @@ resource "aws_db_instance" "ayuda_db" {
   engine_version          = var.db_engine_version
   instance_class          = var.db_instance_class
   db_name                    = "ayuda_humanitaria"        # DB name (in-database)
-  username                = var.db_master_username
-  password                = var.postgres_password
+  username                = var.ah_db_master_username
+  password                = var.ah_db_password
   port                    = var.db_port
   multi_az                = false
   publicly_accessible     = true
@@ -77,8 +77,8 @@ resource "aws_db_instance" "centro_db" {
   engine_version          = var.db_engine_version
   instance_class          = var.db_instance_class
   db_name                    = "centro_datos"            # DB name (in-database)
-  username                = var.db_master_username
-  password                = var.postgres_password
+  username                = var.cd_db_master_username
+  password                = var.cd_db_password
   port                    = var.db_port
   multi_az                = false
   publicly_accessible     = true
@@ -93,3 +93,20 @@ resource "aws_db_instance" "centro_db" {
   }
 }
 
+output "ayuda_db_endpoint" {
+  value = aws_db_instance.ayuda_db.address
+  description = "Endpoint (host) for ayuda-humanitaria-db"
+}
+
+output "centro_db_endpoint" {
+  value = aws_db_instance.centro_db.address
+  description = "Endpoint (host) for centro-datos-db"
+}
+
+output "ayuda_db_port" {
+  value = aws_db_instance.ayuda_db.port
+}
+
+output "centro_db_port" {
+  value = aws_db_instance.centro_db.port
+}
