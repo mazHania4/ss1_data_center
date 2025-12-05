@@ -5,7 +5,6 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn -q -DskipTests clean package
 
-
 # --- Stage 2: Runtime image ---
 FROM eclipse-temurin:21-jre
 

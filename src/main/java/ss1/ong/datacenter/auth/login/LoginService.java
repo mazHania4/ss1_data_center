@@ -53,7 +53,7 @@ public class LoginService {
     public LoginResponseDTO login(LoginDTO loginDTO) {
         try {
             AppUser user = appUserService.getUserByUsername(loginDTO.getUsername());
-            if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPasswordHash())) {
+            if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
                 throw new BadCredentialsException("");
             }
             if (user.getStatus() != StatusUserEnum.ACTIVE) {

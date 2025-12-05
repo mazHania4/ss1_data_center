@@ -7,6 +7,8 @@ resource "azurerm_storage_account" "ayuda_storage" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
+
+  allow_nested_items_to_be_public = true
 }
 
 resource "azurerm_storage_container" "ayuda_container" {

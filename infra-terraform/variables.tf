@@ -47,25 +47,25 @@ variable "db_engine_version" {
 variable "ah_db_master_username" {
   description = "Master username for ayuda humanitaria DB"
   type        = string
-  default     = "xxx"
+  default     = "postgres"
 }
 
 variable "cd_db_master_username" {
   description = "Master username for centro de datos DB"
   type        = string
-  default     = "xxx"
+  default     = "postgres"
 }
 
 variable "ah_db_password" {
   type      = string
   sensitive = true
-  default = "xxx" 
+  default = "ss1-org_db_pass"
 }
 
 variable "cd_db_password" {
   type      = string
   sensitive = true
-  default = "xxx" 
+  default = "ss1-org_db_pass"
 }
 
 variable "db_port" {
@@ -80,7 +80,7 @@ variable "db_port" {
 variable "k3s_vm_size" {
   description = "SKU for Azure VM (Basic tier for low cost)"
   type        = string
-  default     = "Standard_B2ats_v2"
+  default     = "Standard_B2als_v2"
 }
 
 variable "k3s_disk_size" {
@@ -97,13 +97,13 @@ variable "k3s_disk_size" {
 variable "smtp_email_user" {
   type      = string
   sensitive = true
-  default = "xxx"
+  default = "fkzw pueu twfa enqx"
 }
 
 variable "smtp_email_pass" {
   type      = string
   sensitive = true
-  default = "xxx" 
+  default = "haniamazariegos202031953@cunoc.edu.gt"
 }
 
 # --------------------------
@@ -113,11 +113,11 @@ variable "smtp_email_pass" {
 variable "jwt_secret" {
   type      = string
   sensitive = true
-  default = "xxx"
+  default = "supersecretoAccesoSupersecretoRefreshSupersecretoAcceso"
 }
 
 variable "jwt_refresh_secret" {
   type      = string
   sensitive = true
-  default = "xxx"
+  default = "supersecretoAccesoSupersecretoAccesoSupersecretoAcceso"
 }

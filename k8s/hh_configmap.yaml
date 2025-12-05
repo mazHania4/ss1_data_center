@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ayuda-config
+  namespace: app-prod
+data:
+  SERVER_PORT: "8080"
+  DB_HOST: "ss1-orgayudadb.postgres.database.azure.com"
+  DB_NAME: "ayuda_humanitaria"
+
+  DC_SERVICE_URL: "http://centro-datos:8080"
+
+  FRONTEND_ORIGIN: "https://ss1orgfrontend.z9.web.core.windows.net/"
+
+  STORAGE_ACCOUNT: "ss1ayuda"
+  STORAGE_ACCOUNT_ENDPOINT: "https://ss1ayuda.blob.core.windows.net/"
+  STORAGE_CONTAINER: "ayuda-bucket"
+  STORAGE_REGION: "canadacentral"
