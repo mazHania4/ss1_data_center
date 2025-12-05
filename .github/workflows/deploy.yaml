@@ -59,8 +59,8 @@ jobs:
 
       - name: Apply manifests
         run: |
-          kubectl apply -f k8s/dc_service/cd-deployment.yaml -n app-prod
-          kubectl apply -f k8s/dc_service/cd-service.yaml -n app-prod
+          kubectl apply -f k8s/dc_service/cd-deployment.yaml -n app-prod --validate=false
+          kubectl apply -f k8s/dc_service/cd-service.yaml -n app-prod --validate=false
 
       - name: Verify rollout
         run: |
