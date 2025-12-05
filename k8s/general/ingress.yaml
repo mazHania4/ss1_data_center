@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: app-prod
+    # Si se quire recortar la url:
+    #annotations:
+    #  nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.midominio.com
+      http:
+        paths:
+          # ---- Microservicio: ayuda-humanitaria ----
+          - path: /api/hh/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ayuda-humanitaria
+                port:
+                  number: 8080
+
+          # ---- Microservicio: centro-datos ----
+          - path: /api/dc/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: centro-datos
+                port:
+                  number: 8080

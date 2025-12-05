@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ayuda-humanitaria
+  namespace: app-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ayuda-humanitaria
+  template:
+    metadata:
+      labels:
+        app: ayuda-humanitaria
+    spec:
+      containers:
+        - name: ayuda-humanitaria
+          image: ghcr.io/mazHania4/ayuda-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: ayuda-config
+            - secretRef:
+                name: ayuda-secrets
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 15
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+
+      imagePullSecrets:
+        - name: ghcr-secret
