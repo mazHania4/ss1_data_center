@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ayuda-humanitaria
-          image: ghcr.io/mazHania4/centro-backend:latest
+          image: ghcr.io/mazhania4/centro-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
