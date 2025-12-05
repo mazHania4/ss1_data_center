@@ -21,9 +21,9 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new io.swagger.v3.oas.models.info.Info().title("SIE")
+                .info(new io.swagger.v3.oas.models.info.Info().title("SS1.ORG")
                         .version("1.0")
-                        .description("Documentación de la API para el proyecto SIE"));
+                        .description("Documentación de la API para el proyecto SS1 ORG"));
     }
 
     @Bean

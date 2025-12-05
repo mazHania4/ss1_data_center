@@ -1,17 +1,4 @@
-variable "aws_region" {
-  type        = string
-  default     = "us-east-2"
-  description = "AWS region where resources will be created"
-}
-
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
-variable "az_count" {
-  type    = number
-  default = 2
-}
+#variables.tf
 
 # (opcional) para controlar naming prefix
 variable "project_prefix" {
@@ -19,80 +6,118 @@ variable "project_prefix" {
   default = "ss1-org"
 }
 
-# ARN de un usuario IAM con permisos de administrador al que se le darán permisos de administración del cluster eks
-variable "iam_user_admin_arn" {
-  type    = string
-  default = "arn:aws:iam::767828726453:user/admin-terraform"
+# --------------------------
+# VARIABLES PARA AZURE
+# --------------------------
+variable "azure_region" {
+  type        = string
+  default     = "canadacentral"
+  description = "Azure region where resources will be created"
 }
+
+# Cantidad de subnets (solo 1 para minimizar costos)
+variable "subnet_count" {
+  type        = number
+  default     = 1
+}
+
+
+# --------------------------
+# Variables para la BD
+# --------------------------
 
 variable "db_instance_class" {
-  description = "RDS instance class"
+  description = "SKU for Azure PostgreSQL Flexible Server (Basic tier for low cost)"
   type        = string
-  default     = "db.t3.micro"
+  default     = "B_Standard_B1ms"
 }
 
-variable "db_allocated_storage" {
-  description = "Allocated storage (GB)"
+variable "db_storage_mb" {
+  description = "Storage for PostgreSQL DB (in MB)"
   type        = number
-  default     = 5
+  default     = 32768 # 32GB
 }
 
 variable "db_engine_version" {
-  description = "Postgres engine version"
+  description = "PostgreSQL engine version"
   type        = string
-  default     = "17.4"
+  default     = "17"
 }
 
 variable "ah_db_master_username" {
   description = "Master username for ayuda humanitaria DB"
   type        = string
-  default     = "postgres"
+  default     = "xxx"
 }
 
 variable "cd_db_master_username" {
   description = "Master username for centro de datos DB"
   type        = string
-  default     = "postgres"
+  default     = "xxx"
 }
 
 variable "ah_db_password" {
   type      = string
   sensitive = true
-  default = "ss1-org_db_pass" # CAMBIAR!!
+  default = "xxx" 
 }
 
 variable "cd_db_password" {
   type      = string
   sensitive = true
-  default = "ss1-org_db_pass" # CAMBIAR!!
+  default = "xxx" 
 }
 
 variable "db_port" {
-  description = "Port for Postgres"
+  description = "Port for PostgreSQL"
   type        = number
   default     = 5432
 }
 
+# --------------------------
+# variables para la VM
+# --------------------------
+variable "k3s_vm_size" {
+  description = "SKU for Azure VM (Basic tier for low cost)"
+  type        = string
+  default     = "Standard_B2ats_v2"
+}
+
+variable "k3s_disk_size" {
+  description = "(GB) size of disk for VM"
+  type        = number
+  default     = 30
+}
+
+
+# --------------------------
+# SMTP
+# --------------------------
+
 variable "smtp_email_user" {
   type      = string
   sensitive = true
-  default = "fkzw pueu twfa enqx" # CAMBIAR!!
+  default = "xxx"
 }
 
 variable "smtp_email_pass" {
   type      = string
   sensitive = true
-  default = "haniamazariegos202031953@cunoc.edu.gt" # CAMBIAR!!
+  default = "xxx" 
 }
+
+# --------------------------
+# JWT
+# --------------------------
 
 variable "jwt_secret" {
   type      = string
   sensitive = true
-  default = "supersecretoAccesoSupersecretoRefreshSupersecretoAcceso" # CAMBIAR!!
+  default = "xxx"
 }
 
 variable "jwt_refresh_secret" {
   type      = string
   sensitive = true
-  default = "supersecretoAccesoSupersecretoAccesoSupersecretoAcceso" # CAMBIAR!!
+  default = "xxx"
 }

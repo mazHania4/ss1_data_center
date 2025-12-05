@@ -1,20 +1,17 @@
-provider "aws" {
-  profile = "admin-terraform"
-  region  = var.aws_region
-  # credentials se toman desde env vars o perfil configurado por aws cli
+terraform {
+  required_version = ">= 1.4.0"
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_name
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_name
-}
-
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+provider "azurerm" {
+  subscription_id = "6462e5aa-3886-4cbc-96c4-2e3449047cd2"
+  features {
+    resource_group {}
+  }
 }
