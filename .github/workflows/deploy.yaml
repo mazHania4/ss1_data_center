@@ -1,0 +1,65 @@
+name: Deploy to k3s
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "k8s/dc_service/**"
+      - ".github/workflows/deploy.yaml"
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build JAR
+        run: mvn -q -DskipTests clean package
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/centro-backend:latest
+          docker build -t $IMAGE .
+          echo "IMAGE_NAME=$IMAGE" >> $GITHUB_ENV
+
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG_PROD }}" > $HOME/.kube/config
+
+      - name: Set image version
+        run: |
+          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/centro-backend:latest
+          kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
+
+      - name: Apply manifests
+        run: |
+          kubectl apply -f k8s/dc_service/cd-deployment.yaml -n app-prod
+          kubectl apply -f k8s/dc_service/cd-service.yaml -n app-prod
+
+      - name: Verify rollout
+        run: |
+          kubectl rollout status deployment/centro-datos -n app-prod
