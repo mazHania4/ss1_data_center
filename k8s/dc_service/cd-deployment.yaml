@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ayuda-humanitaria
+  name: centro-datos
   namespace: app-prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ayuda-humanitaria
+      app: centro-datos
   template:
     metadata:
       labels:
-        app: ayuda-humanitaria
+        app: centro-datos
     spec:
       containers:
-        - name: ayuda-humanitaria
+        - name: centro-datos
           image: ghcr.io/mazhania4/centro-backend:latest
           imagePullPolicy: Always
           ports:
