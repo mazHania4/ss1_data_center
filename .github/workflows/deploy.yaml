@@ -38,7 +38,7 @@ jobs:
       - name: Build Docker image
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE=ghcr.io/${OWNER}/centro-backend:latest
+          IMAGE=ghcr.io/${OWNER}/centro-backend:${{ github.sha }}
           docker build -t $IMAGE .
           echo "IMAGE_NAME=$IMAGE" >> $GITHUB_ENV
 
@@ -58,7 +58,7 @@ jobs:
 
             echo "Actualizando Deployment centro-datos"
             OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-            IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:latest
+            IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:${{ github.sha }}
 
             kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
 
