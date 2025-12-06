@@ -61,7 +61,7 @@ public enum PublicEndpointsEnum {
     // Rutas publicas de Activity
     SWAGGER_UI(null, "/api/dc/swagger-ui/**"),
     SWAGGER(null, "/api/dc/swagger"),
-    API_DOCS(null, "/v3/api-docs/**"),
+    API_DOCS(null, "/api/dc/v3/api-docs/**"),
 
     ;
 
