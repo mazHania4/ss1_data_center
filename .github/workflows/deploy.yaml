@@ -49,7 +49,7 @@ jobs:
       - name: Deploy to k3s via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          IMAGE_SHA: ${{ env.IMAGE }}
+          IMAGE: ${{ env.IMAGE }}
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
