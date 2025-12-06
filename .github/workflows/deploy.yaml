@@ -58,19 +58,18 @@ jobs:
       #       DESPLIEGUE DENTRO DE LA VM POR SSH
       - name: Deploy to k3s via SSH
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          IMAGE: ${{ steps.image.outputs.IMAGE }}
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
+            IMAGE="${{ steps.image.outputs.IMAGE }}"
             echo "Usando kubeconfig interno del servidor"
             export KUBECONFIG=/home/azureuser/.kube/config
 
             echo "Actualizando Deployment centro-datos de $IMAGE"
 
-            kubectl set image deployment/centro-datos centro-datos=$IMAGE -n app-prod --record
+            kubectl set image deployment/centro-datos centro-datos=$IMAGE -n app-prod 
             kubectl patch deployment centro-datos -n app-prod -p '{"spec":{"template":{"metadata":{"annotations":{"date":"'"$(date +%s)"'"}}}}}'
 
             echo "pull image and start pods"
