@@ -49,17 +49,18 @@ import org.springframework.util.AntPathMatcher;
 @AllArgsConstructor
 public enum PublicEndpointsEnum {
 
-    AUTH_RECOVERY_PASSWORD(HttpMethod.POST, "/api/user/password-recovery"),
-    AUTH_LOGIN(HttpMethod.POST, "/api/login"),
-    AUTH_LOGIN_MFA(HttpMethod.POST, "/api/login/mfa"),
-    SEND_CODE(HttpMethod.POST, "/api/send-code"),
-    SIGN_IN(HttpMethod.POST, "/api/user/register"),
-    SIGN_IN_CLIENT(HttpMethod.POST, "/api/client/register"),
+    AUTH_RECOVERY_PASSWORD(HttpMethod.POST, "/api/dc/user/password-recovery"),
+    AUTH_LOGIN(HttpMethod.POST, "/api/dc/login"),
+    AUTH_LOGIN_MFA(HttpMethod.POST, "/api/dc/login/mfa"),
+    SEND_CODE(HttpMethod.POST, "/api/dc/send-code"),
+    SIGN_IN(HttpMethod.POST, "/api/dc/user/register"),
+    SIGN_IN_CLIENT(HttpMethod.POST, "/api/dc/client/register"),
 
-    SEARCH_FOR_DELIVERY(HttpMethod.GET, "/api/delivery/find/**"),
+    SEARCH_FOR_DELIVERY(HttpMethod.GET, "/api/dc/delivery/find/**"),
 
     // Rutas publicas de Activity
-    SWAGGER_UI(null, "/swagger-ui/**"),
+    SWAGGER_UI(null, "/api/dc/swagger-ui/**"),
+    SWAGGER(null, "/api/dc/swagger"),
     API_DOCS(null, "/v3/api-docs/**"),
 
     ;

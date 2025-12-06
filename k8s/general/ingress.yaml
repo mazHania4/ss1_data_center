@@ -12,7 +12,7 @@ spec:
     - http:
         paths:
           # ---- Microservicio: ayuda-humanitaria ----
-          - path: /api/hh/?(.*)
+          - path: /api/hh
             pathType: Prefix
             backend:
               service:
@@ -21,7 +21,7 @@ spec:
                   number: 8080
 
           # ---- Microservicio: centro-datos ----
-          - path: /api/dc/?(.*)
+          - path: /api/dc
             pathType: Prefix
             backend:
               service:
