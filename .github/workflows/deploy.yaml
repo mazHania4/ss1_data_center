@@ -58,7 +58,8 @@ jobs:
             OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
             IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:latest
 
-            kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
+            kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod --record
+            kubectl patch deployment centro-datos -n app-prod -p '{"spec":{"template":{"metadata":{"annotations":{"date":"'"$(date +%s)"'"}}}}}'
 
             echo "pull image and start pods"
             kubectl -n app-prod rollout restart deployment/centro-datos
