@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -46,22 +46,28 @@ jobs:
       - name: Push Docker image
         run: docker push $IMAGE_NAME
 
-      - name: Configure kubectl
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_PROD }}" > $HOME/.kube/config
+      #       DESPLIEGUE DENTRO DE LA VM POR SSH
+      - name: Deploy to k3s via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            echo "Usando kubeconfig interno del servidor"
+            export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
-      - name: Set image version
-        run: |
-          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:latest
-          kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
+            echo "Actualizando Deployment centro-datos"
+            OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+            IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:latest
 
-      - name: Apply manifests
-        run: |
-          kubectl apply -f k8s/dc_service/cd-deployment.yaml -n app-prod --validate=false
-          kubectl apply -f k8s/dc_service/cd-service.yaml -n app-prod --validate=false
+            kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
 
-      - name: Verify rollout
-        run: |
-          kubectl rollout status deployment/centro-datos -n app-prod
+            echo "Aplicando manifests"
+            kubectl apply -f ~/app/k8s/dc_service/cd-deployment.yaml -n app-prod --validate=false
+            kubectl apply -f ~/app/k8s/dc_service/cd-service.yaml -n app-prod --validate=false
+
+            echo "Esperando rollout..."
+            kubectl rollout status deployment/centro-datos -n app-prod --timeout=120s
+
+            echo "Deployment completado"
