@@ -17,7 +17,7 @@ import ss1.ong.datacenter.auth.roles.services.RoleService;
 import ss1.ong.datacenter.auth.users.enums.RolesEnum;
 
 @RestController
-@RequestMapping("/api/v1/roles")
+@RequestMapping("/api/dc/roles")
 @RequiredArgsConstructor
 public class RoleController {
 

@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2025-28-08
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/dc/user")
 @RequiredArgsConstructor
 public class AppUserController {
 

@@ -20,7 +20,7 @@ import ss1.ong.datacenter.common.exceptions.NotFoundException;
  * @since 2025-28-08
  */
 @RestController
-@RequestMapping("/api/model")
+@RequestMapping("/api/dc/model")
 @RequiredArgsConstructor
 public class ModelController {
 

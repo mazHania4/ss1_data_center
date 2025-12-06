@@ -25,7 +25,7 @@ import ss1.ong.datacenter.common.exceptions.NotFoundException;
  * @since 2025-08-28
  */
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api/dc/login")
 @RequiredArgsConstructor
 public class LoginController {
 

@@ -18,7 +18,7 @@ import ss1.ong.datacenter.common.exceptions.NotFoundException;
  * @since 2025-30-08
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/dc")
 @RequiredArgsConstructor
 public class MfaCodesController {
 

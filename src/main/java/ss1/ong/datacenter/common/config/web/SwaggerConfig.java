@@ -30,7 +30,7 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("public") // grupo de endpoints públicos
-                .pathsToMatch("/api/**") // se define el patrón de las rutas a documentar
+                .pathsToMatch("/api/dc/**") // se define el patrón de las rutas a documentar
                 .build();
     }
 }
