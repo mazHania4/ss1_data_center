@@ -40,23 +40,23 @@ jobs:
 
           IMAGE=ghcr.io/${OWNER}/centro-backend:${GIT_SHA}
           docker build -t $IMAGE .
-          echo "IMAGE_NAME=$IMAGE" >> $GITHUB_ENV
+          echo "image=${IMAGE}" >> $GITHUB_OUTPUT
 
       - name: Push Docker image
-        run: docker push $IMAGE_NAME
+        run: docker push ${{ steps.build_image.outputs.image }}
 
       #       DESPLIEGUE DENTRO DE LA VM POR SSH
       - name: Deploy to k3s via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          IMAGE: ${{ env.IMAGE }}
+          IMAGE: ${{ steps.build_image.outputs.image }}
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             echo "Usando kubeconfig interno del servidor"
-            export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+            export KUBECONFIG=/home/azureuser/.kube/config
 
             echo "Actualizando Deployment centro-datos de $IMAGE"
 
