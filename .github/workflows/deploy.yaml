@@ -42,6 +42,11 @@ jobs:
           docker build -t $IMAGE .
           echo "image=${IMAGE}" >> $GITHUB_OUTPUT
 
+      - name: Debug show image
+        run: |
+          echo "step output image = ${{ steps.build_image.outputs.image }}"
+          echo "env IMAGE_NAME = $IMAGE_NAME" || true
+
       - name: Push Docker image
         run: docker push ${{ steps.build_image.outputs.image }}
 
