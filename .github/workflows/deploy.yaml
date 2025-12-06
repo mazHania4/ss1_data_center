@@ -38,7 +38,7 @@ jobs:
       - name: Build Docker image
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE=ghcr.io/${OWNER}/centro-backend:${{ github.sha }}
+          IMAGE=ghcr.io/${OWNER}/centro-backend:latest
           docker build -t $IMAGE .
           echo "IMAGE_NAME=$IMAGE" >> $GITHUB_ENV
 
@@ -58,9 +58,12 @@ jobs:
 
             echo "Actualizando Deployment centro-datos"
             OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-            IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:${{ github.sha }}
+            IMAGE_TAG=ghcr.io/${OWNER}/centro-backend:latest
 
             kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
+
+            echo "pull image and start pods"
+            kubectl -n app-prod rollout restart deployment/centro-datos
 
             echo "Esperando rollout..."
             kubectl rollout status deployment/centro-datos -n app-prod --timeout=120s
