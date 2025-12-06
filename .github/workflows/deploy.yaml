@@ -33,28 +33,33 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Export IMAGE var
+        id: image
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           GIT_SHA=$(echo "${{ github.sha }}" | head -c 7)
-
           IMAGE=ghcr.io/${OWNER}/centro-backend:${GIT_SHA}
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          echo "IMAGE=${IMAGE}" >> $GITHUB_OUTPUT
+
+
+      - name: Build Docker image
+        run: |
           docker build -t $IMAGE .
-          echo "image=${IMAGE}" >> $GITHUB_OUTPUT
 
       - name: Debug show image
         run: |
-          echo "step output image = ${{ steps.build_image.outputs.image }}"
+          echo "step output image = ${{ steps.image.outputs.IMAGE }}"
           echo "env IMAGE_NAME = $IMAGE_NAME" || true
 
       - name: Push Docker image
-        run: docker push ${{ steps.build_image.outputs.image }}
+        run: docker push ${{ steps.image.outputs.IMAGE }}
 
       #       DESPLIEGUE DENTRO DE LA VM POR SSH
       - name: Deploy to k3s via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          IMAGE: ${{ steps.build_image.outputs.image }}
+          IMAGE: ${{ steps.image.outputs.IMAGE }}
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
