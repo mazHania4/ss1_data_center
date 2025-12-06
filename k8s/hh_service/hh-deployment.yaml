@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ayuda-humanitaria
-          image: ghcr.io/mazhania4/ayuda-backend:latest
+          image: ghcr.io/yennifer017/ayuda-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -27,4 +27,4 @@ spec:
                 name: ayuda-secrets
 
       imagePullSecrets:
-        - name: ghcr-secret
+        - name: ghcr-secret-hh

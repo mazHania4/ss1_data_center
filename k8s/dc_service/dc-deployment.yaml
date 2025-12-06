@@ -27,4 +27,4 @@ spec:
                 name: centro-secrets
 
       imagePullSecrets:
-        - name: ghcr-secret
+        - name: ghcr-secret-dc
