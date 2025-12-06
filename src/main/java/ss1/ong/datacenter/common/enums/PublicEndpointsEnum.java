@@ -55,12 +55,13 @@ public enum PublicEndpointsEnum {
     SEND_CODE(HttpMethod.POST, "/api/dc/send-code"),
     SIGN_IN(HttpMethod.POST, "/api/dc/user/register"),
     SIGN_IN_CLIENT(HttpMethod.POST, "/api/dc/client/register"),
+    GET_ROLES(HttpMethod.GET, "/api/dc/roles"),
 
     SEARCH_FOR_DELIVERY(HttpMethod.GET, "/api/dc/delivery/find/**"),
 
     // Rutas publicas de Activity
     SWAGGER_UI(null, "/api/dc/swagger-ui/**"),
-    SWAGGER(null, "/api/dc/swagger"),
+    SWAGGER(null, "/api/dc/swagger-ui.html"),
     API_DOCS(null, "/api/dc/v3/api-docs/**"),
 
     ;
