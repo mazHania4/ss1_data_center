@@ -62,10 +62,6 @@ jobs:
 
             kubectl set image deployment/centro-datos centro-datos=$IMAGE_TAG -n app-prod || true
 
-            echo "Aplicando manifests"
-            kubectl apply -f ~/app/k8s/dc_service/cd-deployment.yaml -n app-prod --validate=false
-            kubectl apply -f ~/app/k8s/dc_service/cd-service.yaml -n app-prod --validate=false
-
             echo "Esperando rollout..."
             kubectl rollout status deployment/centro-datos -n app-prod --timeout=120s
 
