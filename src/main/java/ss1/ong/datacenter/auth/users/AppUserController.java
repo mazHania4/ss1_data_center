@@ -86,9 +86,9 @@ public class AppUserController {
                     @ApiResponse(responseCode = "200", description = "Exitoso"),
                     @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos")
             })
-    @GetMapping("/user/get/username/{username}")
+    @GetMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'JOURNALIST', 'CLIENT')")
     public UserDTO getByUsername(@PathVariable String username) throws NotFoundException {
         AppUser user = appUserService.getUserByUsername(username);
         return appUserMapper.appUserToUserDto(user);
