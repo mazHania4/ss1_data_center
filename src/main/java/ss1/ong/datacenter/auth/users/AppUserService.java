@@ -15,6 +15,7 @@ import ss1.ong.datacenter.auth.users.dto.request.UpdateUserByAdminDTO;
 import ss1.ong.datacenter.auth.users.dto.response.UserDTO;
 import ss1.ong.datacenter.auth.users.enums.RolesEnum;
 import ss1.ong.datacenter.auth.users.enums.StatusUserEnum;
+import ss1.ong.datacenter.common.exceptions.CustomException;
 import ss1.ong.datacenter.common.exceptions.DuplicateResourceException;
 import ss1.ong.datacenter.common.exceptions.NotFoundException;
 
@@ -38,17 +39,18 @@ public class AppUserService {
     /**
     * registro de  un usuario
     * */
-    public AppUser createUser(CreateUserDTO createUserDTO){
+    public AppUser createUser(CreateUserDTO createUserDTO) throws CustomException {
         if(appUserRepository.existsByUsername(createUserDTO.getUsername())){
             throw new DuplicateResourceException("El nombre de usuario ya esta en uso, elige uno diferente");
         }
 
         String encryptedPassword = passwordEncoder.encode(createUserDTO.getPassword());
         AppUser user = appUserMapper.createUserDtoToAppUser(createUserDTO);
-        user.setRole(RolesEnum.CLIENT);
+        if( user.getRole() == RolesEnum.ADMIN){
+            throw new CustomException("No se pudo especificar el rol de usuario adecuado");
+        }
         user.setPassword(encryptedPassword);
         user.setStatus(StatusUserEnum.ACTIVE);
-        user.setMfaActivated(false);
         return appUserRepository.save(user);
     }
 

@@ -2,8 +2,10 @@ package ss1.ong.datacenter.auth.users.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
+import ss1.ong.datacenter.auth.users.enums.RolesEnum;
 
 @Value
 public class CreateUserDTO {
@@ -30,5 +32,11 @@ public class CreateUserDTO {
     @NotBlank(message = "El email no puede ser vacio")
     @Size(max = 50, message = "El nombre de usuario debe tener como máximo 50 caracteres.")
     String email;
+
+    @NotNull(message = "Debe especificarse un rol")
+    RolesEnum role;
+
+    @NotNull(message = "Debe especificarse si se quiere doble autenticacion")
+    Boolean mfaActivated;
 
 }

@@ -13,6 +13,7 @@ import ss1.ong.datacenter.auth.users.dto.request.RecoveryPasswordDTO;
 import ss1.ong.datacenter.auth.users.dto.request.UpdateUserByAdminDTO;
 import ss1.ong.datacenter.auth.users.dto.response.ExistUsernameDTO;
 import ss1.ong.datacenter.auth.users.dto.response.UserDTO;
+import ss1.ong.datacenter.common.exceptions.CustomException;
 import ss1.ong.datacenter.common.exceptions.NotFoundException;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class AppUserController {
     })
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO signIn(@RequestBody @Valid CreateUserDTO createUserDTO) {
+    public UserDTO signIn(@RequestBody @Valid CreateUserDTO createUserDTO) throws CustomException {
         AppUser createdUser = appUserService.createUser(createUserDTO);
         return appUserMapper.appUserToUserDto(createdUser);
     }
