@@ -13,7 +13,7 @@ import ss1.ong.datacenter.logEntry.dto.response.UserActivityResponseDTO;
 import ss1.ong.datacenter.logEntry.enums.LogLevelEnum;
 import ss1.ong.datacenter.logEntry.enums.ServiceForLogEnum;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,18 +37,18 @@ public class LogEntryController {
 
 
     /**
-     * Obtiene un historial de comisiones con filtros opcionales
+     * Obtiene un historial de Logs con filtros opcionales
      *
      */
-    @Operation(summary = "Obtiene un historial de comisiones con filtros opcionales", description = "Obtiene un listado de sus comisiones según los filtros opcionales")
+    @Operation(summary = "Obtiene un historial de logs con filtros opcionales", description = "Obtiene un listado de logs según los filtros opcionales")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<LogEntryResponseDTO> getLogsFiltered(
             @RequestParam(value="appUserId", required = false) Integer appUserId,
             @RequestParam(value="service", required = false) ServiceForLogEnum service,
             @RequestParam(value="level", required = false) LogLevelEnum level,
-            @RequestParam(value="startDate", required = false) LocalDate startDate,
-            @RequestParam(value="endDate", required = false) LocalDate endDate
+            @RequestParam(value="startDate", required = false) LocalDateTime startDate,
+            @RequestParam(value="endDate", required = false) LocalDateTime endDate
     ) {
         return logEntryService.getLogsFiltered(appUserId, service, level, startDate, endDate);
     }

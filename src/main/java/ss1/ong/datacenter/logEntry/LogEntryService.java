@@ -41,8 +41,10 @@ public class LogEntryService {
                 .collect(Collectors.toList());
     }
 
-    public List<LogEntryResponseDTO> getLogsFiltered(Integer appUserId, ServiceForLogEnum service, LogLevelEnum level, LocalDate startDate, LocalDate endDate) {
-        return logEntryMapper.LogEntryToLogEntryResponseDTO(logEntryRepository.getLogEntriesFiltered(appUserId, service.name(), level.name(), startDate, endDate));
+    public List<LogEntryResponseDTO> getLogsFiltered(Integer appUserId, ServiceForLogEnum service, LogLevelEnum level, LocalDateTime startDate, LocalDateTime endDate) {
+        String levelName = level == null ? null : level.toString();
+        String serviceName = service == null ? null : service.name();
+        return logEntryMapper.LogEntryToLogEntryResponseDTO(logEntryRepository.getLogEntriesFiltered(appUserId, serviceName, levelName, startDate, endDate));
     }
 
     public LogEntryResponseDTO createLogEntry(@Valid NewLogEntryDTO newLogEntryDTO) throws NotFoundException {
